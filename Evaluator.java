@@ -10,17 +10,23 @@ class Evaluator implements Expression {
 				Expression subExpression = new Plus(expressionStack.pop(), expressionStack.pop());
 				expressionStack.push( subExpression );
 			} else if (token.equals("-")) {
-				Expression right = expressionStack.pop();
-				Expression left = expressionStack.pop();
-				Expression subExpression = new Minus(left, right);
+				Expression subExpression = new Minus(expressionStack.pop(), expressionStack.pop());
 				expressionStack.push( subExpression );
-			} else{
+			}else if(token.equals("*")){
+				Expression subExpression = new Plus(expressionStack.pop(), expressionStack.pop());
+				expressionStack.push( subExpression );
+			}else if(token.equals("!")){ 
+				Expression subExpression = new Facto(expressionStack.pop());
+				expressionStack.push( subExpression );
+			}else if(Utils.isNumeric(token)){
+				expressionStack.push( new Number(Integer.valueOf(token)));
+			}else{
 				expressionStack.push( new Variable(token) );
 			}
 		}
 		syntaxTree = expressionStack.pop();
 	}
-	public int interpret(Map<String,Expression> context) {
+	public int interpret(Context context) {
 		return syntaxTree.interpret(context);
 	}
 }

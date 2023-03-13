@@ -6,7 +6,7 @@ public class InterpreterExample {
 	public static void main(String[] args) {
 		String formula = args[0];
 		Evaluator exp = new Evaluator(formula);
-		Map<String,Expression> variables = new HashMap<String,Expression>();
+		Context variables = new Context();
 		System.out.println("Les Valeurs : ");
 		Scanner in = new Scanner(System.in);
 		Scanner in2 = new Scanner(System.in);
@@ -19,7 +19,7 @@ public class InterpreterExample {
 			System.out.println("its value : ");
 			String numbers = in.next();
 			System.out.println("var " + variableName + " value "+numbers + "\n");
-			variables.put(variableName, new Number(Integer.valueOf(numbers)));
+			variables.addElement(variableName, new Number(Integer.valueOf(numbers)));
 		}
 		int result = exp.interpret(variables);
 		System.out.println(result);
